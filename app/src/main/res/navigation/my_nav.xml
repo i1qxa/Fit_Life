@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.fitlife.atfsd.ui.home_screen.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_pilatesFragment3"
+            app:destination="@id/pilatesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cardioFragment2"
+            app:destination="@id/cardioFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_meditationFragment2"
+            app:destination="@id/meditationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_yogaFragment2"
+            app:destination="@id/yogaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardioFragment"
+        android:name="com.fitlife.atfsd.ui.cardio.CardioFragment"
+        android:label="fragment_cardio"
+        tools:layout="@layout/fragment_cardio" />
+    <fragment
+        android:id="@+id/meditationFragment"
+        android:name="com.fitlife.atfsd.ui.meditation.MeditationFragment"
+        android:label="fragment_meditation"
+        tools:layout="@layout/fragment_meditation" />
+    <fragment
+        android:id="@+id/yogaFragment"
+        android:name="com.fitlife.atfsd.ui.yoga.YogaFragment"
+        android:label="fragment_yoga"
+        tools:layout="@layout/fragment_yoga" />
+    <fragment
+        android:id="@+id/pilatesFragment"
+        android:name="com.fitlife.atfsd.ui.pilates.PilatesFragment"
+        android:label="fragment_pilates"
+        tools:layout="@layout/fragment_pilates" />
+</navigation>
