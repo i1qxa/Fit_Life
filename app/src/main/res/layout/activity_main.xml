@@ -11,7 +11,8 @@
         android:id="@+id/mainFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.fitlife.atfsd.ui.home_screen.HomeFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/my_nav"
         app:defaultNavHost="true"
         />
 
