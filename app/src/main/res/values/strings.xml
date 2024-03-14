@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Fit Life</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Домой</string>
     <string name="pilates">Пилатес</string>
     <string name="meditation">Медитация</string>
     <string name="cardio">Кардио</string>
     <string name="yoga">Йога</string>
+    <string name="amount_exercises">%1$d Упражнений</string>
 </resources>

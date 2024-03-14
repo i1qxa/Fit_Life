@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/home"
+        android:title="@string/home"  />
+    <item
+        android:id="@+id/meditationFragment"
+        android:icon="@drawable/meditation"
+        android:title="@string/meditation" />
+    <item
+        android:id="@+id/cardioFragment"
+        android:icon="@drawable/cardio"
+        android:title="@string/cardio" />
+    <item
+        android:id="@+id/pilatesFragment"
+        android:icon="@drawable/pilates"
+        android:title="@string/pilates" />
+
+    <item
+        android:id="@+id/yogaFragment"
+        android:icon="@drawable/yoga"
+        android:title="@string/yoga" />
+
+</menu>

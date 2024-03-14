@@ -3,11 +3,15 @@ package com.fitlife.atfsd.ui.cardio
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.fitlife.atfsd.data.local.FitLifeDB
+import com.fitlife.atfsd.domain.TYPE_CARDIO
 
 class CardioViewModel(application: Application):AndroidViewModel(application) {
 
-    val exerciseDao = FitLifeDB.getInstance(application).trainingsDao()
+    val trainingDao = FitLifeDB.getInstance(application).trainingsDao()
 
-    val testLD = exerciseDao.getTrainingsListShort(2)
+    val trainingTypeCommonInfo = trainingDao.getCommonDataForExerciseType(TYPE_CARDIO)
+
+    val cardioTrainings = trainingDao.getTrainingsListShort(TYPE_CARDIO)
+
 
 }

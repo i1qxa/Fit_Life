@@ -7,15 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fitlife.atfsd.R
 import com.fitlife.atfsd.databinding.FragmentCardioBinding
+import com.fitlife.atfsd.ui.rv_training.TrainingRVAdapter
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 
 class CardioFragment : Fragment() {
 
     private val binding by lazy { FragmentCardioBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<CardioViewModel>()
+    private val rvAdapter by lazy { TrainingRVAdapter() }
+    private val recyclerView by lazy { binding.rvCardioExercises }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,11 +32,50 @@ class CardioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeCommonInfo()
+        setupRecyclerView()
+        observeTrainings()
+    }
+
+    private fun observeCommonInfo() {
         lifecycleScope.launch {
-            viewModel.testLD.collect {
-                val a = it
-                val b = a
+            viewModel.trainingTypeCommonInfo.collect() {
+                if (it != null) {
+                    binding.amountExercises.text =
+                        getString(R.string.amount_exercises, it.amountExercises)
+                    binding.totalDuration.text = it.totalTimeFormatted
+                }
             }
         }
     }
+
+    private fun observeTrainings(){
+        lifecycleScope.launch {
+            viewModel.cardioTrainings.collect(){
+                if (it!=null){
+                    rvAdapter.submitList(it)
+                }
+            }
+        }
+
+    }
+
+    private fun setupRvAdapter() {
+        rvAdapter.onTrainingItemClickListener = {
+            TODO("Реализовать переход в тренировку")
+        }
+    }
+
+    private fun setupRecyclerView() {
+        setupRvAdapter()
+        with(recyclerView) {
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                RecyclerView.VERTICAL,
+                false
+            )
+        }
+    }
+
 }

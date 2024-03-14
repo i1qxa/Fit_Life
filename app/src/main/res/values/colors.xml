@@ -6,4 +6,6 @@
     <color name="pink">#f50057</color>
     <color name="indigo">#3d5afe</color>
     <color name="teal">#1de9b6</color>
+    <color name="grey_200">#eeeeee</color>
+    <color name="green_a_700">#00c853</color>
 </resources>

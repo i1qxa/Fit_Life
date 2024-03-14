@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:layout_marginVertical="5dp"
+    android:elevation="5dp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vert30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3"
+            />
+
+        <ImageView
+            android:id="@+id/ivTrainingLogo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/vert30"
+            app:layout_constraintTop_toTopOf="@id/tvTrainingName"
+            app:layout_constraintBottom_toBottomOf="@id/totalDurationTraining"
+            app:layout_constraintDimensionRatio="1:1"
+            android:scaleType="centerInside"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/vert30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/play_arrow"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tvTrainingName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vert30"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Кардио тренировка для начинающих"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/amountExercisesTraining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/exercise"
+            app:layout_constraintStart_toEndOf="@id/vert30"
+            app:layout_constraintTop_toBottomOf="@id/tvTrainingName"
+            android:text="@string/amount_exercises"
+            android:paddingStart="5dp"
+            />
+
+        <TextView
+            android:id="@+id/totalDurationTraining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/timer"
+            app:layout_constraintStart_toEndOf="@id/vert30"
+            app:layout_constraintTop_toBottomOf="@id/amountExercisesTraining"
+            android:paddingStart="5dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
