@@ -23,12 +23,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.cardCardio.setOnClickListener {
-            launchCardioFragment()
+            launchCardioFragment(R.id.action_homeFragment_to_cardioFragment2)
+        }
+        binding.cardPilates.setOnClickListener {
+            launchCardioFragment(R.id.action_homeFragment_to_pilatesFragment3)
         }
     }
 
-    private fun launchCardioFragment(){
-        findNavController().navigate(R.id.action_homeFragment_to_cardioFragment2)
+    private fun launchCardioFragment(fragmentId:Int){
+        findNavController().navigate(fragmentId)
     }
 
 }

@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fitlife.atfsd.R
 import com.fitlife.atfsd.databinding.FragmentCardioBinding
+import com.fitlife.atfsd.domain.TRAINING_ID
 import com.fitlife.atfsd.ui.rv_training.TrainingRVAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.observeOn
@@ -32,9 +34,16 @@ class CardioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBtnBackClickListener()
         observeCommonInfo()
         setupRecyclerView()
         observeTrainings()
+    }
+
+    private fun setupBtnBackClickListener(){
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun observeCommonInfo() {
@@ -61,8 +70,10 @@ class CardioFragment : Fragment() {
     }
 
     private fun setupRvAdapter() {
-        rvAdapter.onTrainingItemClickListener = {
-            TODO("Реализовать переход в тренировку")
+        rvAdapter.onTrainingItemClickListener = { trainingId ->
+            val args = Bundle()
+            args.putInt(TRAINING_ID, trainingId)
+            findNavController().navigate(R.id.action_cardioFragment_to_trainingFragment, args)
         }
     }
 

@@ -7,4 +7,5 @@
     <string name="cardio">Кардио</string>
     <string name="yoga">Йога</string>
     <string name="amount_exercises">%1$d Упражнений</string>
+    <string name="start">Начать</string>
 </resources>

@@ -27,20 +27,45 @@
         android:id="@+id/cardioFragment"
         android:name="com.fitlife.atfsd.ui.cardio.CardioFragment"
         android:label="fragment_cardio"
-        tools:layout="@layout/fragment_cardio" />
+        tools:layout="@layout/fragment_cardio" >
+        <action
+            android:id="@+id/action_cardioFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/meditationFragment"
         android:name="com.fitlife.atfsd.ui.meditation.MeditationFragment"
         android:label="fragment_meditation"
-        tools:layout="@layout/fragment_meditation" />
+        tools:layout="@layout/fragment_meditation" >
+        <action
+            android:id="@+id/action_meditationFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/yogaFragment"
         android:name="com.fitlife.atfsd.ui.yoga.YogaFragment"
         android:label="fragment_yoga"
-        tools:layout="@layout/fragment_yoga" />
+        tools:layout="@layout/fragment_yoga" >
+        <action
+            android:id="@+id/action_yogaFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pilatesFragment"
         android:name="com.fitlife.atfsd.ui.pilates.PilatesFragment"
         android:label="fragment_pilates"
-        tools:layout="@layout/fragment_pilates" />
+        tools:layout="@layout/fragment_pilates" >
+        <action
+            android:id="@+id/action_pilatesFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.fitlife.atfsd.ui.training.TrainingFragment"
+        android:label="fragment_training"
+        tools:layout="@layout/fragment_training" >
+        <argument
+            android:name="trainingId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
