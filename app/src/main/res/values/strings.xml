@@ -8,4 +8,5 @@
     <string name="yoga">Йога</string>
     <string name="amount_exercises">%1$d Упражнений</string>
     <string name="start">Начать</string>
+    <string name="rest">Отдых</string>
 </resources>
