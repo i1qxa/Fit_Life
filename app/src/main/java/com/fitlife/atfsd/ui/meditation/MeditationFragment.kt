@@ -5,56 +5,88 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fitlife.atfsd.R
+import com.fitlife.atfsd.databinding.FragmentCardioBinding
+import com.fitlife.atfsd.databinding.FragmentMeditationBinding
+import com.fitlife.atfsd.domain.TRAINING_ID
+import com.fitlife.atfsd.ui.cardio.CardioViewModel
+import com.fitlife.atfsd.ui.rv_training.TrainingRVAdapter
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MeditationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MeditationFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val binding by lazy { FragmentMeditationBinding.inflate(layoutInflater) }
+    private val viewModel by viewModels<MeditationViewModel>()
+    private val rvAdapter by lazy { TrainingRVAdapter() }
+    private val recyclerView by lazy { binding.rvMeditationExercises }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meditation, container, false)
+    ): View {
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MeditationFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MeditationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupBtnBackClickListener()
+        observeCommonInfo()
+        setupRecyclerView()
+        observeTrainings()
+    }
+
+    private fun setupBtnBackClickListener() {
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observeCommonInfo() {
+        lifecycleScope.launch {
+            viewModel.trainingTypeCommonInfo.collect() {
+                if (it != null) {
+                    binding.amountExercises.text =
+                        getString(R.string.amount_exercises, it.amountExercises)
+                    binding.totalDuration.text = it.totalTimeFormatted
                 }
             }
+        }
     }
+
+    private fun observeTrainings() {
+        lifecycleScope.launch {
+            viewModel.cardioTrainings.collect() {
+                if (it != null) {
+                    rvAdapter.submitList(it)
+                }
+            }
+        }
+
+    }
+
+    private fun setupRvAdapter() {
+        rvAdapter.onTrainingItemClickListener = { trainingId ->
+            val args = Bundle()
+            args.putInt(TRAINING_ID, trainingId)
+            findNavController().navigate(R.id.action_meditationFragment_to_trainingFragment, args)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        setupRvAdapter()
+        with(recyclerView) {
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                RecyclerView.VERTICAL,
+                false
+            )
+        }
+    }
+
 }

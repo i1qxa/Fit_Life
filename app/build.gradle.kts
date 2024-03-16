@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20-Beta2"
+    id("kotlin-parcelize")
 }
 
 android {
@@ -59,6 +61,13 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-
+    //retrofit
+    implementation (libs.kotlinx.serialization.json)
+    implementation (libs.converter.scalars)
+    implementation (libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation (libs.translate)
     implementation(libs.coil)
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fitlife.atfsd.R
 import com.fitlife.atfsd.databinding.FragmentPilatesBinding
+import com.fitlife.atfsd.domain.TRAINING_ID
 import com.fitlife.atfsd.ui.cardio.CardioViewModel
 import com.fitlife.atfsd.ui.rv_training.TrainingRVAdapter
 import kotlinx.coroutines.launch
@@ -67,8 +68,10 @@ class PilatesFragment : Fragment() {
     }
 
     private fun setupRvAdapter() {
-        rvAdapter.onTrainingItemClickListener = {
-            TODO("Реализовать переход в тренировку")
+        rvAdapter.onTrainingItemClickListener = { trainingId ->
+            val args = Bundle()
+            args.putInt(TRAINING_ID, trainingId)
+            findNavController().navigate(R.id.action_pilatesFragment_to_trainingFragment, args)
         }
     }
 

@@ -28,6 +28,9 @@ class HomeFragment : Fragment() {
         binding.cardPilates.setOnClickListener {
             launchCardioFragment(R.id.action_homeFragment_to_pilatesFragment3)
         }
+        binding.cardMeditation.setOnClickListener {
+            launchCardioFragment(R.id.action_homeFragment_to_meditationFragment2)
+        }
     }
 
     private fun launchCardioFragment(fragmentId:Int){
