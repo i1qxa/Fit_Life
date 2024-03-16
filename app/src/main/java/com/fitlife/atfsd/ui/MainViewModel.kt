@@ -31,7 +31,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val yogaService = YogaService.getInstance()
 
-    suspend fun getYogaExercises() {
+    fun checkForUpdatesYoga() {
+        viewModelScope.launch {
+            if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
+                getYogaExercises()
+            }
+        }
+    }
+
+    private suspend fun getYogaExercises() {
         val response = yogaService.getYogaResponse()
         if (response.isSuccessful) {
             val poseCategoriesTranslated = mutableListOf<PoseCategory>()
@@ -46,7 +54,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 .setTargetLanguage(TranslateLanguage.RUSSIAN)
                 .build()
             val englishRussianTranslator = Translation.getClient(options)
-            var conditions = DownloadConditions.Builder()
+            val conditions = DownloadConditions.Builder()
                 .build()
             englishRussianTranslator.downloadModelIfNeeded(conditions)
                 .addOnSuccessListener {
@@ -55,7 +63,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         .addOnSuccessListener { translatedCollection ->
                             translatedCollection.split(ITEM_SPLITTER).forEach {
                                 if (it.isNotEmpty()) {
-                                    val tmpTranslatedItem = PoseCategoryTranslated.getFromString(it)
+                                    val tmpTranslatedItem =
+                                        PoseCategoryTranslated.getFromString(it)
                                     val poseCategoryEnglishList =
                                         yogaRemoteData?.filter { it.id == tmpTranslatedItem?.id }
                                     if (poseCategoryEnglishList?.isNotEmpty() == true) {
@@ -86,19 +95,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             }
                             viewModelScope.launch {
                                 trainingDao.fetchYogaTrainings(listTrainings)
-                                val mapOfIds = trainingDao.getTrainingIdsForTrainingType(TYPE_YOGA)
+                                val listOfIds =
+                                    trainingDao.getTrainingIdsForTrainingType(TYPE_YOGA)
                                 val listOfExercises = mutableListOf<ExerciseItems>()
                                 poseCategoriesTranslated.forEach { poseCategory ->
-                                    val trainingId = mapOfIds[poseCategory.categoryName]
+                                    val trainingId =
+                                        listOfIds.filter { it.name == poseCategory.categoryName }
+                                            ?.get(0)?.id
                                     poseCategory.poses.forEach { poseItem ->
                                         if (trainingId != null) {
                                             listOfExercises.add(
                                                 ExerciseItems(
                                                     0,
                                                     TYPE_YOGA,
-                                                    poseItem.englishName,
+                                                    poseItem.englishName?:"Йога",
                                                     poseItem.poseDescription,
-                                                    poseItem.urlPng,
+                                                    poseItem.urlPng?:"1",
                                                     trainingId,
                                                     90,
                                                     Random.nextInt(9)
@@ -128,10 +140,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val translatedPoseList = translatedPoses.filter { it.poseId == englishItem.id }
                 if (translatedPoseList.isNotEmpty()) {
                     val translatedPoseItem = translatedPoseList[0]
+                    val poseName = translatedPoseItem.poseName.ifBlank { "Йога" }
                     answer.add(
                         englishItem.copy(
-                            englishName = translatedPoseItem.poseName,
-                            poseDescription = translatedPoseItem.poseDescription
+//                            englishName = translatedPoseItem.poseName?:"Йога",
+                            englishName = poseName,
+                            poseDescription = translatedPoseItem.poseDescription?:"Йога"
                         )
                     )
                 }
@@ -143,12 +157,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    init {
-        viewModelScope.launch {
-            if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
-                getYogaExercises()
-            }
-        }
-    }
 
 }

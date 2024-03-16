@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import coil.load
 import com.fitlife.atfsd.R
 import com.fitlife.atfsd.data.local.exercise_items.ExerciseItems
 import com.fitlife.atfsd.databinding.FragmentTrainingBinding
+import com.fitlife.atfsd.domain.IS_SINGLE_EXERCISE
 import com.fitlife.atfsd.domain.MILS_IN_SECOND
 import com.fitlife.atfsd.domain.TRAINING_ID
 import kotlinx.coroutines.delay
@@ -28,13 +27,15 @@ class TrainingFragment : Fragment() {
 
     private val trainingId by lazy { arguments?.getInt(TRAINING_ID) }
 
+    private val isSingleExercise by lazy { arguments?.getBoolean(IS_SINGLE_EXERCISE)?:false }
+
     private var meditationLogo: Drawable? = null
 
     private lateinit var exerciseList: List<ExerciseItems>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        trainingId?.let { viewModel.setupTrainingId(it) }
+        trainingId?.let { viewModel.setupTrainingId(it, isSingleExercise) }
     }
 
     override fun onCreateView(
@@ -130,7 +131,7 @@ class TrainingFragment : Fragment() {
     }
 
     private fun getTimeFormatted(time: Int): String {
-        val mils = (time * MILS_IN_SECOND).toLong()
+        val mils = (time * MILS_IN_SECOND)
         val minutes = (mils % (MILS_IN_SECOND * 60 * 60)) / (MILS_IN_SECOND * 60)
         val seconds = time - minutes * 60
         return String.format("%02d:%02d", minutes, seconds)

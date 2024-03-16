@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.home_screen.HomeFragment">
 
+    <ImageView
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
+        />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardMeditation"
@@ -17,7 +26,7 @@
         app:layout_constraintBottom_toTopOf="@id/cardCardio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/btnSearch">
 
         <TextView
             android:layout_width="wrap_content"

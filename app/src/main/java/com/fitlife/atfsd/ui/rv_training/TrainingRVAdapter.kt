@@ -30,14 +30,17 @@ class TrainingRVAdapter :
         val item = getItem(position)
         with(holder) {
             trainingName.text = item.name
-            if (item.logo.length<3){
-                val imgId = item.logo.toInt()
-                trainingLogo.setImageDrawable(getMeditationLogo(holder.itemView.context, imgId))
-            }else{
-                trainingLogo.load(item.logo) {
-                    transformations(RoundedCornersTransformation(20.0f))
+            if (item.logo!=null){
+                if (item.logo.length<3){
+                    val imgId = item.logo.toInt()
+                    trainingLogo.setImageDrawable(getMeditationLogo(holder.itemView.context, imgId))
+                }else{
+                    trainingLogo.load(item.logo) {
+                        transformations(RoundedCornersTransformation(20.0f))
+                    }
                 }
             }
+
             amountExercises.text =
                 holder.itemView.context.getString(R.string.amount_exercises, item.amountExercises)
             totalDuration.text = item.totalTimeFormatted

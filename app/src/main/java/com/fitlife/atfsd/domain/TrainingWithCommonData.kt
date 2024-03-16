@@ -1,14 +1,11 @@
 package com.fitlife.atfsd.domain
 
-import android.icu.util.Calendar
-import java.text.SimpleDateFormat
-
 data class TrainingWithCommonData(
     val id: Int,
     val name: String,
     val amountExercises: Int,
     val totalTime: Int,
-    val logo:String,
+    val logo:String?,
 ) {
     val totalTimeFormatted:String
         get() = getTimeFormatted()

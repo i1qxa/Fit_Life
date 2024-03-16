@@ -7,7 +7,9 @@
     <string name="cardio">Кардио</string>
     <string name="yoga">Йога</string>
     <string name="amount_exercises">%1$d Упражнений</string>
+    <string name="amount_repeat">%1$d Повторений</string>
     <string name="start">Начать</string>
     <string name="rest">Отдых</string>
     <string name="repeat_remaining">Повторений \n осталось</string>
+    <string name="rnter_exercise_name">Введите название упражнения....</string>
 </resources>

@@ -33,6 +33,6 @@ interface TrainingsDao {
     suspend fun fetchYogaTrainings(listTrainings:List<Treinings>)
 
     @Query("SELECT name, id FROM treinings WHERE exercise_type_id =:trainingType")
-    suspend fun getTrainingIdsForTrainingType(trainingType:Int):Map<String,Int>
+    suspend fun getTrainingIdsForTrainingType(trainingType:Int):List<TrainingIds>
 
 }

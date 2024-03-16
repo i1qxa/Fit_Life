@@ -11,15 +11,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.fitlife.atfsd.databinding.ActivityMainBinding
-import com.fitlife.atfsd.ui.meditation.MeditationViewModel
+import com.fitlife.atfsd.ui.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var navController: NavController
-    private val viewModel by viewModels<MeditationViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.checkForUpdatesYoga()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         setContentView(binding.root)

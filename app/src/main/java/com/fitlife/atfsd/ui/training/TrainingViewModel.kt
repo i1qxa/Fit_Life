@@ -10,10 +10,14 @@ class TrainingViewModel(application: Application) : AndroidViewModel(application
 
     private val exerciseDao = FitLifeDB.getInstance(application).exerciseItemsDao()
 
-    lateinit var exerciseList:Flow<List<ExerciseItems>>
+    lateinit var exerciseList: Flow<List<ExerciseItems>>
 
-    fun setupTrainingId(trainingId:Int){
-        exerciseList = exerciseDao.getExercisesForTraining(trainingId)
+    fun setupTrainingId(trainingId: Int, isSingleExercise: Boolean) {
+        exerciseList = if (isSingleExercise) {
+            exerciseDao.getExercise(trainingId)
+        } else {
+            exerciseDao.getExercisesForTraining(trainingId)
+        }
     }
 
 }

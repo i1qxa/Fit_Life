@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBtnSearchClickListener()
         binding.cardCardio.setOnClickListener {
             launchCardioFragment(R.id.action_homeFragment_to_cardioFragment2)
         }
@@ -30,6 +31,15 @@ class HomeFragment : Fragment() {
         }
         binding.cardMeditation.setOnClickListener {
             launchCardioFragment(R.id.action_homeFragment_to_meditationFragment2)
+        }
+        binding.cardYoga.setOnClickListener {
+            launchCardioFragment(R.id.action_homeFragment_to_yogaFragment2)
+        }
+    }
+
+    private fun setupBtnSearchClickListener(){
+        binding.btnSearch.setOnClickListener {
+            launchCardioFragment(R.id.action_homeFragment_to_searchFragment)
         }
     }
 

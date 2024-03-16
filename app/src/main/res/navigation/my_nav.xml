@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_yogaFragment2"
             app:destination="@id/yogaFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/cardioFragment"
@@ -67,5 +70,18 @@
         <argument
             android:name="trainingId"
             app:argType="integer" />
+        <argument
+            android:name="isSingleExercise"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.fitlife.atfsd.ui.search_fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
     </fragment>
 </navigation>

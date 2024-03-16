@@ -13,5 +13,4 @@ class CardioViewModel(application: Application):AndroidViewModel(application) {
 
     val cardioTrainings = trainingDao.getTrainingsListShort(TYPE_CARDIO)
 
-
 }

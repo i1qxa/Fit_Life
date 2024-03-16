@@ -70,4 +70,5 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation (libs.translate)
     implementation(libs.coil)
+    implementation (libs.translate)
 }
