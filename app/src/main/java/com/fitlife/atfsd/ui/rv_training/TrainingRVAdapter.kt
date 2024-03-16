@@ -1,5 +1,7 @@
 package com.fitlife.atfsd.ui.rv_training
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -28,8 +30,13 @@ class TrainingRVAdapter :
         val item = getItem(position)
         with(holder) {
             trainingName.text = item.name
-            trainingLogo.load(item.logo) {
-                transformations(RoundedCornersTransformation(20.0f))
+            if (item.logo.length<3){
+                val imgId = item.logo.toInt()
+                trainingLogo.setImageDrawable(getMeditationLogo(holder.itemView.context, imgId))
+            }else{
+                trainingLogo.load(item.logo) {
+                    transformations(RoundedCornersTransformation(20.0f))
+                }
             }
             amountExercises.text =
                 holder.itemView.context.getString(R.string.amount_exercises, item.amountExercises)
@@ -39,4 +46,16 @@ class TrainingRVAdapter :
             }
         }
     }
+
+    private fun getMeditationLogo(context:Context, logoId:Int): Drawable? {
+        return when (logoId) {
+            0 -> context.getDrawable(R.drawable.mountains)
+            1 -> context.getDrawable(R.drawable.river)
+            2 -> context.getDrawable(R.drawable.grass)
+            3 -> context.getDrawable(R.drawable.waterfall)
+            4 -> context.getDrawable(R.drawable.ocean)
+            else -> context.getDrawable(R.drawable.forest)
+        }
+    }
+
 }

@@ -2,5 +2,10 @@ package com.fitlife.atfsd.domain
 
 const val TYPE_CARDIO = 1
 const val TYPE_PILATES = 2
+const val TYPE_MEDITATION = 3
+const val TYPE_YOGA = 4
 const val TRAINING_ID = "trainingId"
 const val MILS_IN_SECOND:Long = 1000
+const val FIELDS_SPLITTER = "|"
+const val VALUE_SPLITTER = "~"
+const val ITEM_SPLITTER = "@"

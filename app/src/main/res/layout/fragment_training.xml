@@ -67,9 +67,39 @@
         layout="@layout/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvExerciseName" />
+        app:layout_constraintEnd_toStartOf="@id/tvRepeatHeader"
+        app:layout_constraintTop_toBottomOf="@id/tvExerciseName"
+        />
+
+    <TextView
+        android:id="@+id/tvRepeatHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/layoutTimer"
+        app:layout_constraintEnd_toStartOf="@id/tvRepeatRemaining"
+        app:layout_constraintTop_toTopOf="@id/layoutTimer"
+        app:layout_constraintBottom_toBottomOf="@id/layoutTimer"
+        android:gravity="center"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/repeat_remaining"
+        />
+
+    <TextView
+        android:id="@+id/tvRepeatRemaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvRepeatHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRepeatHeader"
+        app:layout_constraintBottom_toBottomOf="@id/tvRepeatHeader"
+        android:gravity="center"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        />
 
 
     <TextView
