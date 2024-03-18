@@ -12,19 +12,24 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_pilatesFragment3"
-            app:destination="@id/pilatesFragment" />
+            app:destination="@id/pilatesFragment"
+            app:popUpTo="@id/my_nav" />
         <action
             android:id="@+id/action_homeFragment_to_cardioFragment2"
-            app:destination="@id/cardioFragment" />
+            app:destination="@id/cardioFragment"
+            app:popUpTo="@id/my_nav" />
         <action
             android:id="@+id/action_homeFragment_to_meditationFragment2"
-            app:destination="@id/meditationFragment" />
+            app:destination="@id/meditationFragment"
+            app:popUpTo="@id/my_nav" />
         <action
             android:id="@+id/action_homeFragment_to_yogaFragment2"
-            app:destination="@id/yogaFragment" />
+            app:destination="@id/yogaFragment"
+            app:popUpTo="@id/my_nav" />
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/my_nav" />
     </fragment>
     <fragment
         android:id="@+id/cardioFragment"
