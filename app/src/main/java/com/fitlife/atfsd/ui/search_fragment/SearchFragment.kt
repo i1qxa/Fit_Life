@@ -41,7 +41,7 @@ class SearchFragment : Fragment() {
 
     private fun setupBtnBackClickListener(){
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_searchFragment_to_homeFragment)
         }
     }
 

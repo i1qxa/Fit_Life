@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fitlife.atfsd.R
 import com.fitlife.atfsd.databinding.FragmentPilatesBinding
 import com.fitlife.atfsd.domain.TRAINING_ID
-import com.fitlife.atfsd.ui.cardio.CardioViewModel
 import com.fitlife.atfsd.ui.rv_training.TrainingRVAdapter
 import kotlinx.coroutines.launch
 
@@ -40,7 +39,7 @@ class PilatesFragment : Fragment() {
 
     private fun setupBtnBackClickListener(){
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_pilatesFragment_to_homeFragment)
         }
     }
 

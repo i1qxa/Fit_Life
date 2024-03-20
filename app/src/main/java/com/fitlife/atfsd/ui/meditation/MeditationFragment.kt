@@ -1,20 +1,18 @@
 package com.fitlife.atfsd.ui.meditation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fitlife.atfsd.R
-import com.fitlife.atfsd.databinding.FragmentCardioBinding
 import com.fitlife.atfsd.databinding.FragmentMeditationBinding
 import com.fitlife.atfsd.domain.TRAINING_ID
-import com.fitlife.atfsd.ui.cardio.CardioViewModel
 import com.fitlife.atfsd.ui.rv_training.TrainingRVAdapter
 import kotlinx.coroutines.launch
 
@@ -42,7 +40,7 @@ class MeditationFragment : Fragment() {
 
     private fun setupBtnBackClickListener() {
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_meditationFragment_to_homeFragment)
         }
     }
 

@@ -28,7 +28,8 @@
             app:popUpTo="@id/my_nav" />
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/my_nav" />
     </fragment>
     <fragment
         android:id="@+id/cardioFragment"
@@ -38,6 +39,9 @@
         <action
             android:id="@+id/action_cardioFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
+        <action
+            android:id="@+id/action_cardioFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/meditationFragment"
@@ -47,6 +51,9 @@
         <action
             android:id="@+id/action_meditationFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
+        <action
+            android:id="@+id/action_meditationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/yogaFragment"
@@ -56,6 +63,9 @@
         <action
             android:id="@+id/action_yogaFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
+        <action
+            android:id="@+id/action_yogaFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/pilatesFragment"
@@ -65,6 +75,9 @@
         <action
             android:id="@+id/action_pilatesFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
+        <action
+            android:id="@+id/action_pilatesFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/trainingFragment"
@@ -87,5 +100,8 @@
         <action
             android:id="@+id/action_searchFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

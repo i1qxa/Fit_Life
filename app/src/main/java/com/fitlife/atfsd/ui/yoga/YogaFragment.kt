@@ -39,7 +39,7 @@ class YogaFragment : Fragment() {
 
     private fun setupBtnBackClickListener(){
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_yogaFragment_to_homeFragment)
         }
     }
 
