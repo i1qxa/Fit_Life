@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20-Beta2"
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -14,8 +15,8 @@ android {
         applicationId = "com.fitlife.atfsd"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -71,4 +72,7 @@ dependencies {
     implementation (libs.translate)
     implementation(libs.coil)
     implementation (libs.translate)
+    //SDK'S
+    implementation(platform(libs.firebase.bom))
+    implementation("com.google.firebase:firebase-analytics")
 }
