@@ -74,5 +74,6 @@ dependencies {
     implementation (libs.translate)
     //SDK'S
     implementation(platform(libs.firebase.bom))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.firebase.messaging)
+    implementation (libs.af.android.sdk)
 }

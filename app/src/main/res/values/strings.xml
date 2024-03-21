@@ -12,4 +12,9 @@
     <string name="rest">Отдых</string>
     <string name="repeat_remaining">Повторений \n осталось</string>
     <string name="rnter_exercise_name">Введите название упражнения....</string>
+    <string name="dialog_title">Ошибка</string>
+    <string name="dialog_text">Отсутствует подключение к сети интернет. Пожалуйста подключитесь к сети Wi-Fi или перейдите в место где лучше ловит мобильный интернет.</string>
+    <string name="btn_check_internet">Проверить</string>
+    <string name="ok_btn">Разрешить</string>
+    <string name="no_btn">Запретить</string>
 </resources>

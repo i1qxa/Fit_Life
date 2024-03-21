@@ -31,6 +31,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val yogaService = YogaService.getInstance()
 
+    val internetStatus = MutableLiveData<Boolean>()
+
+    fun changeInternetStatus(status:Boolean){
+        internetStatus.value = status
+    }
+
     fun checkForUpdatesYoga() {
         viewModelScope.launch {
             if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
@@ -143,7 +149,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     val poseName = translatedPoseItem.poseName.ifBlank { "Йога" }
                     answer.add(
                         englishItem.copy(
-//                            englishName = translatedPoseItem.poseName?:"Йога",
                             englishName = poseName,
                             poseDescription = translatedPoseItem.poseDescription?:"Йога"
                         )
