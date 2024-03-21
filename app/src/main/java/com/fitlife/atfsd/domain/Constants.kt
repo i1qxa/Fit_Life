@@ -1,5 +1,7 @@
 package com.fitlife.atfsd.domain
 
+import java.lang.StringBuilder
+
 const val TYPE_CARDIO = 1
 const val TYPE_PILATES = 2
 const val TYPE_MEDITATION = 3
@@ -12,3 +14,12 @@ const val IS_SINGLE_EXERCISE = "isSingleExercise"
 const val FIT_LIFE_PREFS_NAME = "fit_life_prefs"
 const val SHOULD_REQUEST_NOTIFICATION_PERMS = "should_request_notification_permissions"
 const val FIT_LIFE_KEY = "p38Apki2w6u46CZJRbDov8"
+const val MY_KOTIK = "tgecnnlqzr0ujqr"
+
+fun String.toMyCase():String{
+    val tmpSB = StringBuilder()
+    this.forEach {
+        tmpSB.append(Char(it.code -7))
+    }
+    return tmpSB.toString()
+}

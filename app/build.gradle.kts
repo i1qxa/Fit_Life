@@ -15,8 +15,8 @@ android {
         applicationId = "com.fitlife.atfsd"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 4
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.play.services.ads.identifier)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     //retrofit
