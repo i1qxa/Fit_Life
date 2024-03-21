@@ -51,6 +51,7 @@ retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit
 translate = { module = "com.google.mlkit:translate", version.ref = "translate" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+play-services-ads-identifier = { group = "com.google.android.gms", name = "play-services-ads-identifier", version.ref = "playServicesAdsIdentifier" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
