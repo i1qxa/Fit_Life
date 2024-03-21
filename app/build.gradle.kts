@@ -76,4 +76,5 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
     implementation (libs.af.android.sdk)
+    implementation(libs.androidx.ads.identifier)
 }
