@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val fitLifePrefs by lazy { getSharedPreferences(FIT_LIFE_PREFS_NAME, Context.MODE_PRIVATE) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.checkForUpdatesYoga()
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         viewModel.changeInternetStatus(checkInternetConnection())
@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         binding.navHostFragment.visibility = View.VISIBLE
         binding.bottomNavMenu.visibility = View.VISIBLE
         binding.pbInternetConnection.visibility = View.GONE
+        viewModel.checkForUpdatesYoga()
         checkNotificationPermissions()
     }
 
