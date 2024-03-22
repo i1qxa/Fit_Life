@@ -8,3 +8,5 @@ data class Url(
     @SerialName("url")
     val url:String
 )
+
+
