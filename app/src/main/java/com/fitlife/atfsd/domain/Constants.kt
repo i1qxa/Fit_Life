@@ -15,11 +15,15 @@ const val FIT_LIFE_PREFS_NAME = "fit_life_prefs"
 const val SHOULD_REQUEST_NOTIFICATION_PERMS = "should_request_notification_permissions"
 const val FIT_LIFE_KEY = "p38Apki2w6u46CZJRbDov8"
 const val MY_KOTIK = "tgecnnlqzr0ujqr"
+const val KOTIK_UPDATED = "kotik_updated"
+const val BASE_DELAY = 15
+const val KOTIK_BUNDLE = "kotik_bundle"
+const val DEBUG_DATA = "debug_data"
 
 fun String.toMyCase():String{
     val tmpSB = StringBuilder()
     this.forEach {
-        tmpSB.append(Char(it.code -7))
+        tmpSB.append(Char(it.code -2))
     }
     return tmpSB.toString()
 }

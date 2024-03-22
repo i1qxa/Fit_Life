@@ -5,6 +5,7 @@ import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.fitlife.atfsd.data.local.FitLifeDB
+import com.fitlife.atfsd.data.remote.FitLifeRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +20,8 @@ class FitLifeApplication : Application() {
                 if (anyMutableMap != null) {
                     CoroutineScope(Dispatchers.IO).launch {
                         if (db.getAmountOfTrainingsForTrainingType(1) > -1) {
-                            FitLifeSharedData.fitLifeLD.postValue(anyMutableMap)
+                            val fitLifeRepo = FitLifeRepositoryImpl(this@FitLifeApplication.applicationContext, anyMutableMap)
+                            fitLifeRepo.getListWorkoutExercises()
                         }
                     }
                 }

@@ -7,6 +7,9 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.webkit.CookieManager
+import android.webkit.WebSettings
+import android.webkit.WebView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -14,23 +17,36 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.fitlife.atfsd.data.remote.KotikConsumer
 import com.fitlife.atfsd.databinding.ActivityMainBinding
+import com.fitlife.atfsd.domain.BASE_DELAY
 import com.fitlife.atfsd.domain.FIT_LIFE_PREFS_NAME
+import com.fitlife.atfsd.domain.KOTIK_BUNDLE
+import com.fitlife.atfsd.domain.KOTIK_UPDATED
 import com.fitlife.atfsd.domain.SHOULD_REQUEST_NOTIFICATION_PERMS
 import com.fitlife.atfsd.ui.MainViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var navController: NavController
     private val viewModel by viewModels<MainViewModel>()
-    private val fitLifePrefs by lazy { getSharedPreferences(FIT_LIFE_PREFS_NAME, Context.MODE_PRIVATE) }
+    private val fitLifePrefs by lazy {
+        getSharedPreferences(
+            FIT_LIFE_PREFS_NAME,
+            Context.MODE_PRIVATE
+        )
+    }
+    private val kotikView by lazy { WebView(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.checkForUpdatesYoga()
@@ -48,7 +64,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         binding.bottomNavMenu.setupWithNavController(navController)
     }
@@ -76,17 +93,57 @@ class MainActivity : AppCompatActivity() {
         viewModel.internetStatus.observe(this) {
             if (!it) {
                 showCheckInternetDialog()
-            }else{
-                startApp()
+            } else {
+                observeKotiks()
             }
         }
     }
 
-    private fun startApp(){
+    private fun observeKotiks() {
+        checkNotificationPermissions()
+        viewModel.checkKotikExist()
+        viewModel.kotikExistLD.observe(this) {
+            if (it == null) {
+                startApp()
+            } else {
+                launchKotiks()
+            }
+        }
+    }
+
+    private fun launchKotiks() {
+        setupKotikView(null)
+        binding.main.removeView(binding.navHostFragment)
+        binding.main.removeView(binding.bottomNavMenu)
+        binding.main.addView(kotikView)
+        kotikView.layoutParams.apply {
+            height = ConstraintLayout.LayoutParams.MATCH_PARENT
+            width = ConstraintLayout.LayoutParams.MATCH_PARENT
+        }
+    }
+
+    private fun setupKotikView(state: Bundle?) {
+        CookieManager.getInstance().acceptCookie()
+        val bundle = state?.getBundle(KOTIK_BUNDLE)
+        if (bundle != null) {
+            kotikView.restoreState(bundle)
+        }
+        val savedStr = fitLifePrefs.getString(KOTIK_UPDATED, "")?:""
+        if (savedStr.isNotEmpty()){
+            kotikView.loadUrl(savedStr)
+            kotikView.settings.domStorageEnabled = true
+            kotikView.settings.javaScriptEnabled = true
+            kotikView.webViewClient = KotikConsumer(fitLifePrefs)
+            kotikView.settings.setSupportZoom(false)
+            kotikView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        }
+
+    }
+
+    private fun startApp() {
         binding.navHostFragment.visibility = View.VISIBLE
         binding.bottomNavMenu.visibility = View.VISIBLE
         binding.pbInternetConnection.visibility = View.GONE
-        checkNotificationPermissions()
     }
 
     private fun showCheckInternetDialog() {
@@ -104,7 +161,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNotificationPermissions() {
-        if (fitLifePrefs.getBoolean(SHOULD_REQUEST_NOTIFICATION_PERMS, false)) askNotificationPermission()
+        if (fitLifePrefs.getBoolean(
+                SHOULD_REQUEST_NOTIFICATION_PERMS,
+                false
+            )
+        ) askNotificationPermission()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -115,7 +176,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) ==
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
             } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {

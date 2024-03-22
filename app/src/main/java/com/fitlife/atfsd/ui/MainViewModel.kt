@@ -1,6 +1,7 @@
 package com.fitlife.atfsd.ui
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,16 +13,22 @@ import com.fitlife.atfsd.data.local.remote.yoga.PoseItem
 import com.fitlife.atfsd.data.local.remote.yoga.PoseTranslated
 import com.fitlife.atfsd.data.local.remote.yoga.YogaService
 import com.fitlife.atfsd.data.local.treinings.Treinings
+import com.fitlife.atfsd.domain.BASE_DELAY
+import com.fitlife.atfsd.domain.FIT_LIFE_PREFS_NAME
 import com.fitlife.atfsd.domain.ITEM_SPLITTER
+import com.fitlife.atfsd.domain.KOTIK_UPDATED
 import com.fitlife.atfsd.domain.TYPE_YOGA
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val fitLifePrefs = application.baseContext.getSharedPreferences(FIT_LIFE_PREFS_NAME, Context.MODE_PRIVATE)
 
     private val trainingDao = FitLifeDB.getInstance(application).trainingsDao()
 
@@ -33,16 +40,37 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val internetStatus = MutableLiveData<Boolean>()
 
+    val kotikExistLD = MutableLiveData<String?>()
+
     fun changeInternetStatus(status:Boolean){
         internetStatus.value = status
     }
 
-    fun checkForUpdatesYoga() {
+    fun checkKotikExist(){
         viewModelScope.launch {
-            if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
-                getYogaExercises()
+            var isKotikExist = false
+            var kotikStep = BASE_DELAY
+            while (!isKotikExist && kotikStep>0){
+                val kotik = fitLifePrefs.getString(KOTIK_UPDATED, null)
+                if (kotik!=null){
+                    isKotikExist = true
+                    kotikExistLD.postValue(kotik)
+                }
+                kotikStep--
+                delay(1000)
+            }
+            if (!isKotikExist){
+                kotikExistLD.postValue(null)
             }
         }
+    }
+
+    fun checkForUpdatesYoga() {
+//        viewModelScope.launch {
+//            if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
+//                getYogaExercises()
+//            }
+//        }
     }
 
     private suspend fun getYogaExercises() {
