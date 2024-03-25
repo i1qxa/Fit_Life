@@ -1,11 +1,9 @@
 package com.fitlife.atfsd.data.remote
 
 import android.content.Context
-import android.util.Log
 import com.appsflyer.AppsFlyerLib
 import com.fitlife.atfsd.domain.FIT_LIFE_PREFS_NAME
 import com.fitlife.atfsd.domain.KOTIK_UPDATED
-import com.fitlife.atfsd.domain.MY_KOTIK
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +13,6 @@ import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONException
-import retrofit2.http.Url
 
 class FitLifeRepositoryImpl(private val context:Context, private val fitLifeSharedData:Map<String, Any>) {
 
@@ -78,17 +75,15 @@ class FitLifeRepositoryImpl(private val context:Context, private val fitLifeShar
 
 
         } else {
-            Log.d(
-                MY_KOTIK,
-                "Get Link From server Error:${response.code} message:${response.message}"
-            )
         }
         return responseLink
     }
 
-    private fun getKotikData(preFitLifeData:String): com.fitlife.atfsd.data.remote.Url?{
+    private fun getKotikData(preFitLifeData:String): com.fitlife.atfsd.data.remote.Url? {
         return try {
             Json.decodeFromString<com.fitlife.atfsd.data.remote.Url>(preFitLifeData)
+        }catch (e:Exception) {
+            null
         }catch (e: JSONException){
             null
         }

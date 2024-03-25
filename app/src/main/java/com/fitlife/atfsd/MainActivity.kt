@@ -10,6 +10,7 @@ import android.view.View
 import android.webkit.CookieManager
 import android.webkit.WebSettings
 import android.webkit.WebView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -21,19 +22,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.fitlife.atfsd.data.remote.KotikConsumer
 import com.fitlife.atfsd.databinding.ActivityMainBinding
-import com.fitlife.atfsd.domain.BASE_DELAY
 import com.fitlife.atfsd.domain.FIT_LIFE_PREFS_NAME
 import com.fitlife.atfsd.domain.KOTIK_BUNDLE
 import com.fitlife.atfsd.domain.KOTIK_UPDATED
 import com.fitlife.atfsd.domain.SHOULD_REQUEST_NOTIFICATION_PERMS
 import com.fitlife.atfsd.ui.MainViewModel
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     private val kotikView by lazy { WebView(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.checkForUpdatesYoga()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         viewModel.changeInternetStatus(checkInternetConnection())
@@ -115,10 +112,15 @@ class MainActivity : AppCompatActivity() {
         setupKotikView(null)
         binding.main.removeView(binding.navHostFragment)
         binding.main.removeView(binding.bottomNavMenu)
-        binding.main.addView(kotikView)
-        kotikView.layoutParams.apply {
-            height = ConstraintLayout.LayoutParams.MATCH_PARENT
-            width = ConstraintLayout.LayoutParams.MATCH_PARENT
+
+        try {
+            binding.main.addView(kotikView)
+            kotikView.layoutParams.apply {
+                height = ConstraintLayout.LayoutParams.MATCH_PARENT
+                width = ConstraintLayout.LayoutParams.MATCH_PARENT
+            }
+        } catch (e: Exception) {
+
         }
     }
 
@@ -128,8 +130,8 @@ class MainActivity : AppCompatActivity() {
         if (bundle != null) {
             kotikView.restoreState(bundle)
         }
-        val savedStr = fitLifePrefs.getString(KOTIK_UPDATED, "")?:""
-        if (savedStr.isNotEmpty()){
+        val savedStr = fitLifePrefs.getString(KOTIK_UPDATED, "") ?: ""
+        if (savedStr.isNotEmpty()) {
             kotikView.loadUrl(savedStr)
             kotikView.settings.domStorageEnabled = true
             kotikView.settings.javaScriptEnabled = true
@@ -137,13 +139,21 @@ class MainActivity : AppCompatActivity() {
             kotikView.settings.setSupportZoom(false)
             kotikView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         }
+        onBackPressedDispatcher.addCallback(backBehavior)
+    }
 
+    private val backBehavior = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (kotikView.canGoBack()) kotikView.goBack()
+            else this@MainActivity.finishAffinity()
+        }
     }
 
     private fun startApp() {
         binding.navHostFragment.visibility = View.VISIBLE
         binding.bottomNavMenu.visibility = View.VISIBLE
         binding.pbInternetConnection.visibility = View.GONE
+        viewModel.checkForUpdatesYoga()
     }
 
     private fun showCheckInternetDialog() {

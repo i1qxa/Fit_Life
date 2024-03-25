@@ -16,9 +16,8 @@ const val SHOULD_REQUEST_NOTIFICATION_PERMS = "should_request_notification_permi
 const val FIT_LIFE_KEY = "p38Apki2w6u46CZJRbDov8"
 const val MY_KOTIK = "tgecnnlqzr0ujqr"
 const val KOTIK_UPDATED = "kotik_updated"
-const val BASE_DELAY = 15
+const val BASE_DELAY = 30
 const val KOTIK_BUNDLE = "kotik_bundle"
-const val DEBUG_DATA = "debug_data"
 
 fun String.toMyCase():String{
     val tmpSB = StringBuilder()

@@ -66,11 +66,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun checkForUpdatesYoga() {
-//        viewModelScope.launch {
-//            if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
-//                getYogaExercises()
-//            }
-//        }
+        viewModelScope.launch {
+            if (trainingDao.getAmountOfTrainingsForTrainingType(TYPE_YOGA) < 2) {
+                getYogaExercises()
+            }
+        }
     }
 
     private suspend fun getYogaExercises() {
